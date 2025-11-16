@@ -30,6 +30,11 @@ function Console() {
 
       let _data = laucherService.getData();
       setData(_data)
+      
+      // Load the YAML config from storage
+      const storedYaml = providerService.getYaml('launcherYaml', laucherService.getDefault());
+      setYamlConfig(storedYaml);
+      
       print(_data, setContent);
       launch(_data);
       setIsLoaded(true);
@@ -88,7 +93,7 @@ function Console() {
   };
   const handleYamlConfigKeyChange = (key) => {
     console.debug('handleYamlConfigKeyChange', key);
-    providerService.setYaml(key);
+    providerService.setYaml('launcherYaml', key);
     setYamlConfig(key);
   };
   //handleLauch

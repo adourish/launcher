@@ -29,7 +29,7 @@ class LauncherService {
   top: 0
   name: Whatsapp
   group: b
-  enabled: true
+  enabled: false
   focused: false
   fullscreen: true
 - url: https://todoist.com/app/project/2149072136
@@ -39,7 +39,7 @@ class LauncherService {
   top: 0
   name: Tasks
   group: a
-  enabled: true
+  enabled: false
   focused: false
   fullscreen: true
 - url: https://mail.google.com/mail/u/0/#inbox
