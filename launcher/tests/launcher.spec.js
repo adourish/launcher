@@ -79,6 +79,18 @@ test.describe('Launcher Application', () => {
   });
 
   test('should handle window lifecycle', async ({ page }) => {
+    // Set up error listener BEFORE navigating
+    const errors = [];
+    page.on('pageerror', error => {
+      // Filter out expected cross-origin errors from external window creation
+      const isCrossOriginError = error.message.includes('cross-origin') || 
+                                  error.message.includes('security policy');
+      if (!isCrossOriginError) {
+        errors.push(error.message);
+        console.log('Unexpected page error:', error.message);
+      }
+    });
+    
     await page.goto('/launcher.html');
     
     // Wait for initialization
@@ -88,15 +100,12 @@ test.describe('Launcher Application', () => {
     const consoleDiv = page.locator('.console');
     await expect(consoleDiv).toBeVisible();
     
-    // Verify no critical errors in console
-    const errors = [];
-    page.on('pageerror', error => {
-      errors.push(error.message);
-    });
+    // Log any unexpected errors found for debugging
+    if (errors.length > 0) {
+      console.log('Unexpected errors found:', errors);
+    }
     
-    await page.waitForTimeout(500);
-    
-    // Should have no page errors
+    // Should have no unexpected page errors (cross-origin errors are expected)
     expect(errors.length).toBe(0);
   });
 });
