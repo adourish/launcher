@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading...</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <iframe id="content" src=""></iframe>
+    <script>
+        // Get URL parameters
+        const params = new URLSearchParams(window.location.search);
+        const url = params.get('url');
+        const title = params.get('title');
+        
+        // Set the window title
+        if (title) {
+            document.title = title;
+        }
+        
+        // Load the URL in the iframe
+        if (url) {
+            document.getElementById('content').src = url;
+        }
+    </script>
+</body>
+</html>

@@ -57,8 +57,11 @@ function Console() {
   function launch(data) {
     console.debug('console.constrolservice', controlService, providerService, laucherService, formatService, build)
     data.forEach(windowData => {
+      // Use wrapper.html to set custom window titles for external URLs
+      const wrapperUrl = `/wrapper.html?url=${encodeURIComponent(windowData.url)}&title=${encodeURIComponent(windowData.name)}`;
+      
       controlService.createWindow(
-        windowData.url,
+        wrapperUrl,
         windowData.width,
         windowData.height,
         windowData.left,
