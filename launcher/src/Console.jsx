@@ -62,7 +62,9 @@ function Console() {
 
   function launchWindow(windowData) {
     console.debug('launchWindow', windowData.name);
-    const wrapperUrl = `/wrapper.html?url=${encodeURIComponent(windowData.url)}&title=${encodeURIComponent(windowData.name)}`;
+    // Use relative path for wrapper.html to work with GitHub Pages
+    const baseUrl = window.location.origin + window.location.pathname.replace(/\/[^/]*$/, '');
+    const wrapperUrl = `${baseUrl}/wrapper.html?url=${encodeURIComponent(windowData.url)}&title=${encodeURIComponent(windowData.name)}`;
     
     controlService.createWindow(
       wrapperUrl,
