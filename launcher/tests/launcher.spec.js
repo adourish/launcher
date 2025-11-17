@@ -78,6 +78,35 @@ test.describe('Launcher Application', () => {
     expect(hasMountLog).toBeTruthy();
   });
 
+  test('should only show enabled items (Chat, Mail, Calendar)', async ({ page }) => {
+    await page.goto('/launcher.html');
+    
+    // Wait for content to load
+    await page.waitForTimeout(1000);
+    
+    // Get the console content text
+    const contentText = await page.textContent('.console');
+    
+    // Verify the 3 enabled items are present in the launcher output
+    expect(contentText).toContain('🙀:Chat');
+    expect(contentText).toContain('🙀:Mail');
+    expect(contentText).toContain('🙀:Calendar');
+    
+    // Verify disabled items are NOT in the launcher output (not as 🙀: items)
+    expect(contentText).not.toContain('🙀:Whatsapp');
+    expect(contentText).not.toContain('🙀:Tasks');
+    
+    // Count occurrences of each item in launcher format
+    const chatCount = (contentText.match(/🙀:Chat/g) || []).length;
+    const mailCount = (contentText.match(/🙀:Mail/g) || []).length;
+    const calendarCount = (contentText.match(/🙀:Calendar/g) || []).length;
+    
+    // Each enabled item should appear exactly once
+    expect(chatCount).toBe(1);
+    expect(mailCount).toBe(1);
+    expect(calendarCount).toBe(1);
+  });
+
   test('should handle window lifecycle', async ({ page }) => {
     // Set up error listener BEFORE navigating
     const errors = [];

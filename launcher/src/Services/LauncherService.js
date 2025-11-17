@@ -1,4 +1,3 @@
-
 import RobodogLib from '../../node_modules/robodoglib/dist/robodoglib.bundle';
 const providerService = new RobodogLib.ProviderService();
 
@@ -7,7 +6,8 @@ class LauncherService {
    getData() {
       let launcherYaml = providerService.getJson('launcherYaml', this.getDefault());
       console.debug('LauncherService.getdata', launcherYaml);
-      return launcherYaml;
+      // Filter to only return enabled items
+      return launcherYaml.filter(item => item.enabled === true);
    }
 
    getDefault() {
