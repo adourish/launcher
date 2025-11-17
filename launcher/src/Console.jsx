@@ -62,11 +62,9 @@ function Console() {
 
   function launchWindow(windowData) {
     console.debug('launchWindow', windowData.name);
-    // Use simple relative path - wrapper.html is in the same directory
-    const wrapperUrl = `./wrapper.html?url=${encodeURIComponent(windowData.url)}&title=${encodeURIComponent(windowData.name)}`;
-    
+    // Launch URL directly - window titles will use the page's own title
     controlService.createWindow(
-      wrapperUrl,
+      windowData.url,
       windowData.width,
       windowData.height,
       windowData.left,
